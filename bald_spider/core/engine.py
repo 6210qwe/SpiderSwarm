@@ -58,7 +58,8 @@ class Engine:
         self.spider = spider
 
         # 初始化调度器和下载器、数据处理器
-        self.scheduler = Scheduler(self.crawler)
+        # self.scheduler = Scheduler(self.crawler)
+        self.scheduler = Scheduler.create_instance(self.crawler)
         self.processor = Processor(self.crawler)
         if hasattr(self.scheduler,"open"):
             self.scheduler.open()
@@ -112,8 +113,10 @@ class Engine:
     async def _scheduler_request(self,request):
         # 为什么不在上面直接写await self.scheduler.enqueue_request(request)
         # 因为我们需要进行去重操作，而不是直接进行入队操作
-        # todo 去重
-        await self.scheduler.enqueue_request(request)
+        #  去重
+        if await self.scheduler.enqueue_request(request):
+            if self.crawler.subscriber is not None:
+                asyncio.create_task(self.crawler.subscriber.notify(request_schedules, request, self.crawler.spider))
 
     async def _get_next_request(self):
         return await self.scheduler.next_request()

@@ -13,3 +13,6 @@ DOWNLOADER = "bald_spider.core.downloader.aiohttp_downloader.AioDownloader"
 
 INTERVAL = 5
 STATS_DUMP = True
+
+FILTER_DEBUG = True
+FILTER_CLS = "bald_spider.duplicate_filter.memory_filter.MemoryFilter"

@@ -17,10 +17,10 @@ def to_bytes(text, encoding="utf-8"):
 
 
 def request_fingerprint(request: Request,
-                        include_headers: Optional[Iterable[Union[bytes, str]]] = True
+                        include_headers: Optional[Iterable[Union[bytes, str]]] = None
                         ) -> str:
     headers: Optional[Tuple[str, ...]] = None
-    if include_headers:
+    if include_headers is not None:
         headers = tuple(header.lower() for header in sorted(include_headers))
     fp = hashlib.md5()
     fp.update(to_bytes(request.method))

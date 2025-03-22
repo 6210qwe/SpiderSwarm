@@ -19,6 +19,7 @@ class Crawler:
         self.engine:Optional[Engine] = None
         self.stats:Optional[StatsCollector] = None
         self.settings:SettingsManager = settings.copy()
+        self.subscriber = None
 
     async def crawl(self):
         self.spider = self._create_spider()
