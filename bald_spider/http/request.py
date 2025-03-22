@@ -10,7 +10,7 @@ class Request:
             method: str = "GET",
             cookies: Optional[Dict] = None,
             proxy: Optional[Dict] = None,
-            body="",
+            body: Optional[Dict] = None,
             encoding="utf-8",
             # 和请求无关，但是和运行流程有关
             meta:Optional[Dict] = None

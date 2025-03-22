@@ -61,7 +61,11 @@ class DownloaderBase(metaclass=DownloaderMeta):
     async def fetch(self, request) -> Optional[Response]:
         # 其实在这个地方，请求来的时候我们加入到队列中，当请求结束后，我们从队列中删除，可以使用上下文管理器来进行操作
         async with self._active(request):
+            # 可以在下载前，在这里对请求预处理
+            # self.process_request(request)
             response = await self.download(request)
+            # 在下载后，在这里处理响应的预处理
+            # self.process_response(response)
             return response
 
     @abstractmethod
