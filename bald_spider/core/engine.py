@@ -176,6 +176,10 @@ class Engine:
     async def close_spider(self):
         # 为了处理异常关闭下，请求中途断开，然后报错的问题，我们可以等所有的请求请求完毕，在关闭下载器
         await asyncio.gather(*self.task_manager.current_task)
+        await self.scheduler.close()
         await self.downloader.close()
         if self.normal:
             await self.crawler.close()
+            # # 关闭过滤器
+            # if hasattr(self.scheduler, 'dupe_filter'):
+            #     await self.scheduler.dupe_filter.closed()

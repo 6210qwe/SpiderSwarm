@@ -13,7 +13,8 @@ class Request:
             body: Optional[Dict] = None,
             encoding="utf-8",
             # 和请求无关，但是和运行流程有关
-            meta:Optional[Dict] = None
+            meta: Optional[Dict] = None,
+            dont_filter= None
     ):
         self.url = url
         self.headers = headers
@@ -25,6 +26,7 @@ class Request:
         self.body = body
         self.encoding = encoding
         self._meta = meta if meta is not None else {}
+        self.dont_filter = dont_filter
 
     def __lt__(self, other):
         return self.priority < other.priority

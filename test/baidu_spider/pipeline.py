@@ -1,3 +1,9 @@
+#
+# import random
+# from motor.motor_asyncio import AsyncIOMotorClient
+# from bald_spider.event import spider_closed
+# from bald_spider.execptions import ItemDiscard
+# from bald_spider.utils.log import get_logger
 
 class TestPipeline:
 

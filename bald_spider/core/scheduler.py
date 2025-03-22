@@ -1,6 +1,6 @@
 import asyncio
 from asyncio import PriorityQueue
-from typing import Optional
+from typing import Optional, Callable
 from bald_spider.utils.pqueue import SpiderPriorityQueue
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
@@ -37,8 +37,19 @@ class Scheduler:
         request = await self.request_queue.get()
         return request
 
+    # async def enqueue_request(self, request):
+    #     if self.dupe_filter.requested(request):
+    #         self.dupe_filter.log_stats(request)
+    #         return False
+    #     await self.request_queue.put(request)
+    #     # 将请求的数量 +1
+    #     self.crawler.stats.inc_value("request_Scheduled_count")
+    #     return True
     async def enqueue_request(self, request):
-        if self.dupe_filter.requested(request):
+        if (
+                not request.dont_filter and
+                self.dupe_filter.requested(request)
+        ):
             self.dupe_filter.log_stats(request)
             return False
         await self.request_queue.put(request)
@@ -67,3 +78,7 @@ class Scheduler:
             self.logger.info(f"Crawler {last_response_count} pages (at {response_rate} pages / {interval}s)"
                              f"Got {last_item_count} items (at {item_rate} items / {interval}s)")
             await asyncio.sleep(interval)
+
+    async def close(self):
+        if isinstance(closed := getattr(self.dupe_filter, "closed", None), Callable):
+            await closed()
