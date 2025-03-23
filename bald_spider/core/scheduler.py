@@ -1,6 +1,8 @@
 import asyncio
 from asyncio import PriorityQueue
 from typing import Optional, Callable
+
+from bald_spider.event import request_scheduled
 from bald_spider.utils.pqueue import SpiderPriorityQueue
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
@@ -59,6 +61,7 @@ class Scheduler:
             self.dupe_filter.log_stats(request)
             return False
         await self.request_queue.put(request)
+        asyncio.create_task(self.crawler.subscriber.notify(request_scheduled, request, self.crawler.spider))
         # 将请求的数量 +1
         self.crawler.stats.inc_value("request_Scheduled_count")
         return True

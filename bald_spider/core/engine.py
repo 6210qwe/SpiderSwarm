@@ -1,7 +1,7 @@
 import asyncio
 from inspect import iscoroutine
 
-from typing import Optional,Generator,Callable,Final,Set
+from typing import Optional, Generator, Callable, Final, Set
 from bald_spider.core.scheduler import Scheduler
 from bald_spider.spider import Spider
 from bald_spider.utils.spider import transform
@@ -13,30 +13,31 @@ from bald_spider.items.items import Item
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
 from bald_spider.core.downloader import DownloaderBase
+from bald_spider.event import spider_opened, spider_error
 
 
 class Engine:
-    def __init__(self,crawler):
+    def __init__(self, crawler):
         self.crawler = crawler
         self.settings = crawler.settings
 
         # 初始化日志对象,就使用默认的日志级别INFO
         self.logger = get_logger(self.__class__.__name__)
         # 写类型注解 self.downloader: Downloader = Downloader()
-        self.downloader:Optional[DownloaderBase] = None
+        self.downloader: Optional[DownloaderBase] = None
         # 我们使用yield的方式得到生成器，兼容于urls和url
-        self.start_requests:Optional[Generator] = None
+        self.start_requests: Optional[Generator] = None
         # 初始化调度器
-        self.scheduler:Optional[Scheduler] = None
+        self.scheduler: Optional[Scheduler] = None
         # 初始化数据处理器
-        self.processor:Optional[Processor] = None
+        self.processor: Optional[Processor] = None
         # 初始化spider
-        self.spider:Optional[Spider] = None
+        self.spider: Optional[Spider] = None
         # 控制爬虫进行的开关
         self.running = False
         # 初始化task管理器
-        print("当前的并发数是：",self.settings.getint("CONCURRENCY"))
-        self.task_manager:TaskManager= TaskManager(self.settings.getint("CONCURRENCY"))
+        print("当前的并发数是：", self.settings.getint("CONCURRENCY"))
+        self.task_manager: TaskManager = TaskManager(self.settings.getint("CONCURRENCY"))
         # 程序是不是正常的
         self.normal = True
 
@@ -44,7 +45,7 @@ class Engine:
         downloader_cls = load_class(self.settings.get("DOWNLOADER"))
         # 暴漏下载器给用户可自行定义，这样的话，用户未必遵守规定
         # 为了代码的规范，我们使得下载器必须要继承自DownloaderBase
-        if not issubclass(downloader_cls,DownloaderBase):
+        if not issubclass(downloader_cls, DownloaderBase):
             raise TypeError(f"The downloader class ({self.settings.get('DOWNLOADER')})"
                             f"does not fully implemented required interface")
         return downloader_cls
@@ -61,20 +62,22 @@ class Engine:
         # self.scheduler = Scheduler(self.crawler)
         self.scheduler = Scheduler.create_instance(self.crawler)
         self.processor = Processor(self.crawler)
-        if hasattr(self.scheduler,"open"):
+        if hasattr(self.scheduler, "open"):
             self.scheduler.open()
         downloader_cls = self._get_downloader_cls()
         self.downloader = downloader_cls.create_instance(self.crawler)
-        if hasattr(self.downloader,"open"):
+        if hasattr(self.downloader, "open"):
             self.downloader.open()
         self.processor = Processor(self.crawler)
-        if hasattr(self.processor,"open"):
+        if hasattr(self.processor, "open"):
             self.processor.open()
         # 使用iter将任何变成类型变成generator、防止人为复写(不用yield,使用return)的时候构造的数据不是generator
         self.start_requests = iter(spider.start_request())
         await self._open_spider()
 
     async def _open_spider(self):
+        # 创建爬虫开启的notify, 会从订阅系统中遍历，创建task
+        asyncio.create_task(self.crawler.subscriber.notify(spider_opened))
         crawling = asyncio.create_task(self.crawl())
         # 这个地方可以做其他事情
         asyncio.create_task(self.scheduler.interval_log(self.settings.getint("INTERVAL")))
@@ -107,31 +110,33 @@ class Engine:
         if not self.running:
             await self.close_spider()
 
-    async def enqueue_request(self,request):
+    async def enqueue_request(self, request):
         await self._scheduler_request(request)
 
-    async def _scheduler_request(self,request):
+    async def _scheduler_request(self, request):
         # 为什么不在上面直接写await self.scheduler.enqueue_request(request)
         # 因为我们需要进行去重操作，而不是直接进行入队操作
         #  去重
         if await self.scheduler.enqueue_request(request):
             if self.crawler.subscriber is not None:
-                asyncio.create_task(self.crawler.subscriber.notify(request_schedules, request, self.crawler.spider))
+                pass
+                # asyncio.create_task(self.crawler.subscriber.notify(request_schedules, request, self.crawler.spider))
 
     async def _get_next_request(self):
         return await self.scheduler.next_request()
 
-    async def _crawl(self,request):
+    async def _crawl(self, request):
         # 因为在task这个地方完成了两件事，下载和处理输出，所以当任务完成的时候，下载也一定完成了
         async def crawl_task():
             outputs = await self._fetch(request)
             # todo 处理output
             if outputs:
                 await self._handle_spider_output(outputs)
+
         await self.task_manager.semaphore.acquire()
         self.task_manager.create_task(crawl_task())
 
-    async def _fetch(self,request):
+    async def _fetch(self, request):
         async def _success(_response):
             callback: Callable = request.callback or self.spider.parse
             # 得到的数据类型可能是异步生成器，同步生成器，无类型数据，需要兼容
@@ -143,6 +148,7 @@ class Engine:
                 else:
                     # 是生成器类型，就都转化成异步生成器
                     return transform(_outputs)
+
         _response = await self.downloader.fetch(request)
         if _response is None:
             return None
@@ -150,13 +156,19 @@ class Engine:
         # 这个地方暂时只处理成功的代码
         outputs = await _success(_response)
         return outputs
-    async def _handle_spider_output(self,outputs):
+
+    async def _handle_spider_output(self, outputs):
         """
         在这个地方对输出的结果进行判断，数据走管道，请求重新回到spider
         """
         async for spider_output in outputs:
-            if isinstance(spider_output,(Request,Item)):
+            if isinstance(spider_output, (Request, Item)):
                 await self.processor.enqueue(spider_output)
+            elif isinstance(spider_output, Exception):
+                # 在这里调用处理函数是没问题的，但是如果说开发者没有写spider_error
+                # 因为没有抛出异常，在内部把异常消化掉了
+                asyncio.create_task(self.crawler.subscriber.notify(spider_error,spider_output, self.spider))
+                raise spider_output
             else:
                 raise OutputError(f"{type(self.spider)} must return Request or Item")
 

@@ -1,13 +1,21 @@
 from bald_spider.spider import Spider
 from bald_spider import Request
 from items import BaiduItem  # type:ignore
-
+from bald_spider.event import spider_error
 
 class BaiduSpider(Spider):
     # start_url ="https://www.baidu.com"
     start_urls = ["http://www.baidu.com", "http://www.baidu.com"]
 
     custom_settings = {"CONCURRENCY": 20}
+
+    @classmethod
+    def create_instance(cls,crawler):
+        o = cls()
+        o.crawler = crawler
+        crawler.subscriber.subscribe(o.spider_error, event=spider_error)
+        return o
+
 
     def parse(self, response):
         """
@@ -36,3 +44,12 @@ class BaiduSpider(Spider):
         item["title"] = response.xpath("//title/text()").get()
         # item.title = "111"
         yield item
+
+    async def spider_error(self, exc, spider):
+        print(f"爬虫出错了{exc}, 请紧急处理一下.")
+
+    async def spider_opened(self):
+        print("我想在脚本开启的时候做一些事情，这就是我想做的事情")
+
+    async def spider_closed(self):
+        print("我想在脚本关闭的时候做一些事情，这就是我想做的事情")

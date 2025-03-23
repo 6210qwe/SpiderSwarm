@@ -1,5 +1,5 @@
 import asyncio
-from typing import Type,Final,Set,Optional
+from typing import Type, Final, Set, Optional
 from bald_spider.spider import Spider
 from bald_spider.settings.settings_manager import SettingsManager
 from bald_spider.exceptions import SpiderTypeError
@@ -9,23 +9,32 @@ import signal
 from bald_spider.utils.log import get_logger
 from bald_spider.stats_collector import StatsCollector
 from bald_spider.utils.date import now
+from bald_spider.subscriber import Subscriber
+from bald_spider.event import spider_opened
+from bald_spider.event import spider_closed
 
 logger = get_logger(__name__)
 
+
 class Crawler:
-    def __init__(self,spider_cls,settings):
+    def __init__(self, spider_cls, settings):
         self.spider_cls = spider_cls
-        self.spider:Optional[Spider] = None
-        self.engine:Optional[Engine] = None
-        self.stats:Optional[StatsCollector] = None
-        self.settings:SettingsManager = settings.copy()
-        self.subscriber = None
+        self.spider: Optional[Spider] = None
+        self.engine: Optional[Engine] = None
+        self.stats: Optional[StatsCollector] = None
+        self.settings: SettingsManager = settings.copy()
+        self.subscriber: Optional[Subscriber] = None
 
     async def crawl(self):
+        self.subscriber = self._create_subscriber()
         self.spider = self._create_spider()
         self.engine = self._create_engine()
         self.stats = self._create_stats()
         await self.engine.start_spider(self.spider)
+
+    def _create_subscriber(self):
+        subscriber = Subscriber()
+        return subscriber
 
     def _create_stats(self):
         stats = StatsCollector(self)
@@ -45,24 +54,28 @@ class Crawler:
         engine = Engine(self)
         return engine
 
-    def _set_spider(self,spider):
-        merge_settings(spider,self.settings)
+    def _set_spider(self, spider):
+        self.subscriber.subscribe(spider.spider_opened, event=spider_opened)
+        self.subscriber.subscribe(spider.spider_closed, event=spider_closed)
+        merge_settings(spider, self.settings)
 
-    async def close(self,reason="finished"):
-        self.stats.close_spider(self.spider,reason)
+    async def close(self, reason="finished"):
+        asyncio.create_task(self.subscriber.notify(spider_closed))
+        self.stats.close_spider(self.spider, reason)
+
 
 class CrawlerProcess:
-    def __init__(self,settings=None):
-        self.crawlers:Final[Set] = set()
-        self._active:Final[Set] = set()
+    def __init__(self, settings=None):
+        self.crawlers: Final[Set] = set()
+        self._active: Final[Set] = set()
         self.settings = settings
         # `ctrl + c`的信号是SIGINT
-        signal.signal(signal.SIGINT,self._shutdown)
+        signal.signal(signal.SIGINT, self._shutdown)
 
     # 在这个地方，我们可以实例化多个爬虫，那么在创建的时候使用的是一个配置文件
     # 配置管理器中使用的是可变的Mapping类型，这样会相互干扰，所以需要对配置管理进行深拷贝
-    async def crawl(self,spider:Type[Spider]):
-        crawler:Crawler = self._create_crawler(spider)
+    async def crawl(self, spider: Type[Spider]):
+        crawler: Crawler = self._create_crawler(spider)
         self.crawlers.add(crawler)
         task = await self._crawl(crawler)
         self._active.add(task)
@@ -75,16 +88,16 @@ class CrawlerProcess:
     async def start(self):
         await asyncio.gather(*self._active)
 
-    def _create_crawler(self,spider_cls) -> Crawler:
+    def _create_crawler(self, spider_cls) -> Crawler:
         # 防止传入的是字符串，类型异常抛出
-        if isinstance(spider_cls,str):
+        if isinstance(spider_cls, str):
             raise SpiderTypeError(f"{type(self)}.crawl args:String is not supported")
-        crawler = Crawler(spider_cls,self.settings)
+        crawler = Crawler(spider_cls, self.settings)
         return crawler
 
-    def _shutdown(self,_signum,_frame):
+    def _shutdown(self, _signum, _frame):
         for crawler in self.crawlers:
             crawler.engine.running = False
             crawler.engine.normal = False
-            crawler.stats.close_spider(crawler.spider,"ctrl c")
+            crawler.stats.close_spider(crawler.spider, "ctrl c")
         logger.warning(f"spider received `ctrl c` single,closed")

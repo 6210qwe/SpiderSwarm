@@ -1,5 +1,8 @@
+from asyncio import create_task
 from typing import List, Dict, Callable, Optional
 from types import MethodType
+
+from scrapy.signals import response_received
 
 from bald_spider import Request, Response
 from bald_spider.utils.log import get_logger
@@ -9,7 +12,7 @@ from pprint import pformat
 from collections import defaultdict
 from bald_spider.middleware import BaseMiddleware
 from bald_spider.utils.project import common_call
-
+from bald_spider.event import ignore_request
 
 class MiddlewareManager:
     def __init__(self, crawler):
@@ -41,13 +44,17 @@ class MiddlewareManager:
     async def _process_response(self, request: Request, response: Response):
         """只能返回request和response, 因为下载成功不能返回None"""
         for method in reversed(self.methods["process_response"]):
-            response = await common_call(method, request, response, self.crawler.spider)
-            if isinstance(response, Request):
-                return response
-            if isinstance(response, Response):
-                continue
-            raise InvalidOutput(
-                f"{method.__qualname__} must return Request or Response, got {type(response).__name__}.")
+            try:
+                response = await common_call(method, request, response, self.crawler.spider)
+            except IgnoreRequest as exc:
+                create_task(self.crawler.subscriber.notify(ignore_request, exc, request, self.crawler.spider))
+            else:
+                if isinstance(response, Request):
+                    return response
+                if isinstance(response, Response):
+                    continue
+                raise InvalidOutput(
+                    f"{method.__qualname__} must return Request or Response, got {type(response).__name__}.")
         return response
 
     async def _process_exception(self, request: Request, exc: Exception):
@@ -70,6 +77,7 @@ class MiddlewareManager:
             #在下载器的时候有预留东西，self.request_method如果传的不是get或post会抛出keyerror
             raise RequestMethodError(f"{request.method.lower()} is not allowed")
         except IgnoreRequest as exc:
+            create_task(self.crawler.subscriber.notify(ignore_request, exc, request, self.crawler.spider))
             self.logger.info(f"{request} ignored.")
             self._stats.inc_value("request_ignore_count")
             response = await self._process_exception(request, exc)
@@ -78,6 +86,7 @@ class MiddlewareManager:
             response = await self._process_exception(request, exc)
         else:
             # 临时性代码
+            create_task(self.crawler.subscriber.notify(response_received, response, self.crawler.spider))
             self.crawler.stats.inc_value("response_received_count")
         if isinstance(response, Response):
             response = await self._process_response(request, response)
