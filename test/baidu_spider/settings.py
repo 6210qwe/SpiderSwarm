@@ -7,6 +7,7 @@ LOG_LEVEL = "DEBUG"
 MIDDLEWARES = [
     "bald_spider.middleware.request_ignore.RequestIgnore",
     "bald_spider.middleware.response_code.ResponseCodeStats",
+    "bald_spider.middleware.download_delay.DownloadDelay",
     # "test.baidu_spider.middleware.TestMiddleware",
     # "test.baidu_spider.middleware.TestMiddleware1",
 ]

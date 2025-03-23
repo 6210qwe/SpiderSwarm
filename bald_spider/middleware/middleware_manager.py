@@ -7,7 +7,7 @@ from scrapy.signals import response_received
 from bald_spider import Request, Response
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
-from bald_spider.exceptions import MiddlewareInitError, InvalidOutput, RequestMethodError, IgnoreRequest
+from bald_spider.exceptions import MiddlewareInitError, InvalidOutput, RequestMethodError, IgnoreRequest, NotConfigured
 from pprint import pformat
 from collections import defaultdict
 from bald_spider.middleware import BaseMiddleware
@@ -122,9 +122,13 @@ class MiddlewareManager:
         if not hasattr(middleware_cls, "create_instance"):
             raise MiddlewareInitError(
                 f"Middleware Init failed,must inherit from `BaseMiddleware` or must have `create_instance` method.")
-        instance = middleware_cls.create_instance(self.crawler)
-        self.middlewares.append(instance)
-        return True
+        try:
+            instance = middleware_cls.create_instance(self.crawler)
+            self.middlewares.append(instance)
+            return True
+        except NotConfigured:
+            return False
+
 
     @classmethod
     def create_instance(cls, *args, **kwargs):

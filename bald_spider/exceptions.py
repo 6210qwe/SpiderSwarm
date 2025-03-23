@@ -31,8 +31,7 @@ class RequestMethodError(Exception):
     pass
 
 class IgnoreRequest(Exception):
-    def __init__(self, *args: object):
-        super().__init__(args)
-        self.msg = None
+    pass
 
+class NotConfigured(Exception):
     pass
