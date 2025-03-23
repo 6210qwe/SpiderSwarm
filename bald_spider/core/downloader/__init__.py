@@ -67,6 +67,9 @@ class DownloaderBase(metaclass=DownloaderMeta):
             response = await self.middleware.download(request)
             # 在下载后，在这里处理响应的预处理
             # self.process_response(response)
+            # 触发响应接收事件
+            if response:
+                await self.crawler.subscriber.notify("response_received", response)
             return response
 
     @abstractmethod

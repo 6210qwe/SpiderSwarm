@@ -14,6 +14,7 @@ from bald_spider.middleware import BaseMiddleware
 from bald_spider.utils.project import common_call
 from bald_spider.event import ignore_request
 
+
 class MiddlewareManager:
     def __init__(self, crawler):
         self.crawler = crawler
@@ -48,6 +49,7 @@ class MiddlewareManager:
                 response = await common_call(method, request, response, self.crawler.spider)
             except IgnoreRequest as exc:
                 create_task(self.crawler.subscriber.notify(ignore_request, exc, request, self.crawler.spider))
+                return None
             else:
                 if isinstance(response, Request):
                     return response
@@ -78,8 +80,11 @@ class MiddlewareManager:
             raise RequestMethodError(f"{request.method.lower()} is not allowed")
         except IgnoreRequest as exc:
             create_task(self.crawler.subscriber.notify(ignore_request, exc, request, self.crawler.spider))
-            self.logger.info(f"{request} ignored.")
-            self._stats.inc_value("request_ignore_count")
+            # self.logger.info(f"{request} ignored.")
+            # self._stats.inc_value("request_ignore_count")
+            # reason = exc.msg
+            # if reason:
+            #     self._stats.inc_value(f"request_ignore_reason/{reason}")
             response = await self._process_exception(request, exc)
         except Exception as exc:
             self._stats.inc_value(f"download_error/{exc.__class__.__name__}")

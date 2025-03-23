@@ -14,6 +14,24 @@ DOWNLOADER = "bald_spider.core.downloader.aiohttp_downloader.AioDownloader"
 INTERVAL = 5
 STATS_DUMP = True
 
+
+MIDDLEWARES = [
+    "bald_spider.middleware.request_ignore.RequestIgnore",
+    "bald_spider.middleware.response_code.ResponseCodeStats",
+    # "bald_spider.middleware.request_delay.RequestDelay",
+    # "bald_spider.middleware.request_random_delay.RequestRandomDelay",
+    # "bald_spider.middleware.request_random_user_agent.RequestRandomUserAgent",
+    # "bald_spider.middleware.request_random_cookie.RequestRandomCookie",
+]
+
+
+
+
+
+
+
+
+
 FILTER_DEBUG = True
 # FILTER_CLS = "bald_spider.duplicate_filter.memory_filter.MemoryFilter"
 # FILTER_CLS = "bald_spider.duplicate_filter.redis_filter.RedisFilter"
