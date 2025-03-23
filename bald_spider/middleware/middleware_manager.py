@@ -4,7 +4,7 @@ from types import MethodType
 from bald_spider import Request, Response
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
-from bald_spider.exceptions import MiddlewareInitError, InvalidOutput, RequestMethodError
+from bald_spider.exceptions import MiddlewareInitError, InvalidOutput, RequestMethodError, IgnoreRequest
 from pprint import pformat
 from collections import defaultdict
 from bald_spider.middleware import BaseMiddleware
@@ -69,6 +69,10 @@ class MiddlewareManager:
         except KeyError:
             #在下载器的时候有预留东西，self.request_method如果传的不是get或post会抛出keyerror
             raise RequestMethodError(f"{request.method.lower()} is not allowed")
+        except IgnoreRequest as exc:
+            self.logger.info(f"{request} ignored.")
+            self._stats.inc_value("request_ignore_count")
+            response = await self._process_exception(request, exc)
         except Exception as exc:
             self._stats.inc_value(f"download_error/{exc.__class__.__name__}")
             response = await self._process_exception(request, exc)

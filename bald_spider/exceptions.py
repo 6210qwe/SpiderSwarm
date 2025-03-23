@@ -29,3 +29,6 @@ class PipelineInitError(Exception):
 
 class RequestMethodError(Exception):
     pass
+
+class IgnoreRequest(Exception):
+    pass
