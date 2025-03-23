@@ -17,7 +17,7 @@ class Request:
             dont_filter= None
     ):
         self.url = url
-        self.headers = headers
+        self.headers = headers if headers else {}
         self.callback = callback
         self.priority = priority
         self.method = method

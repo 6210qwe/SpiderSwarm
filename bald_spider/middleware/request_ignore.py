@@ -28,6 +28,7 @@ class RequestIgnore:
             self.stats.inc_value("request_ignore")
             self.logger.info(f"{request.url} is ignored")
             return True
+        return None
 
 
 

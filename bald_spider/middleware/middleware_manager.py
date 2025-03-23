@@ -129,7 +129,6 @@ class MiddlewareManager:
         except NotConfigured:
             return False
 
-
     @classmethod
     def create_instance(cls, *args, **kwargs):
         return cls(*args, **kwargs)

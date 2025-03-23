@@ -1,3 +1,4 @@
+import json
 from importlib import import_module
 from bald_spider.settings import default_settings
 from collections.abc import MutableMapping
@@ -5,7 +6,7 @@ from copy import deepcopy
 
 
 class SettingsManager(MutableMapping):
-    def __init__(self,values=None):
+    def __init__(self, values=None):
         self.attributes = {}
         self.set_settings(default_settings)
         self.update_values(values)
@@ -42,18 +43,24 @@ class SettingsManager(MutableMapping):
             return bool(int(got))
         except ValueError:
             # 报错就是str类型
-            if got in ("True","true","TRUE"):
+            if got in ("True", "true", "TRUE"):
                 return True
-            if got in ("False","false","FALSE"):
+            if got in ("False", "false", "FALSE"):
                 return False
-            raise ValueError("Supported values for bool settings are (0 or 1),(True or False),('0' or '1'),('True' or 'False'),('TRUE' or 'FALSE'),('true' or 'false')")
+            raise ValueError(
+                "Supported values for bool settings are (0 or 1),(True or False),('0' or '1'),('True' or 'False'),('TRUE' or 'FALSE'),('true' or 'false')")
 
     def getlist(self, name, default=None):
         value = self.get(name, default or [])
-        if isinstance(value,str):
+        if isinstance(value, str):
             value = value.split(",")
         return list(value)
 
+    def getdict(self, name, default=None):
+        value = self.get(name, default or {})
+        if isinstance(value, str):
+            value = json.loads(value)
+        return dict(value)
 
     def __delitem__(self, key):
         del self.attributes[key]
@@ -76,10 +83,10 @@ class SettingsManager(MutableMapping):
 
     __repr__ = __str__
 
-    def update_values(self,values):
+    def update_values(self, values):
         if values is not None:
-            for key,value in values.items():
-                self.set(key,value)
+            for key, value in values.items():
+                self.set(key, value)
 
     # 继承自抽象类的抽象方法都是要自行实现的
     def __iter__(self):
