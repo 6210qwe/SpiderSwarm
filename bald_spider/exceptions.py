@@ -26,3 +26,6 @@ class InvalidOutput(Exception):
 
 class PipelineInitError(Exception):
     pass
+
+class RequestMethodError(Exception):
+    pass

@@ -2,7 +2,7 @@ from pprint import pformat
 from bald_spider.items import Field, ItemMeta
 from collections.abc import MutableMapping
 from copy import deepcopy
-from bald_spider.execptions import ItemInitError,ItemAttributeError
+from bald_spider.exceptions import ItemInitError,ItemAttributeError
 
 
 class Item(MutableMapping, metaclass=ItemMeta):

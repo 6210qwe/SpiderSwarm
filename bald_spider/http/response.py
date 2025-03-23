@@ -2,7 +2,7 @@ from typing import Dict, Optional
 from bald_spider import Request
 import ujson
 import re
-from bald_spider.execptions import DecodeError
+from bald_spider.exceptions import DecodeError
 from urllib.parse import urljoin as _urljoin
 from parsel import Selector
 

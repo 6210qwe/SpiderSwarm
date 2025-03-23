@@ -1,7 +1,7 @@
 from pprint import pformat
 from typing import List
 
-from bald_spider.execptions import PipelineInitError
+from bald_spider.exceptions import PipelineInitError
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
 

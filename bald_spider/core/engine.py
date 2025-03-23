@@ -5,7 +5,7 @@ from typing import Optional,Generator,Callable,Final,Set
 from bald_spider.core.scheduler import Scheduler
 from bald_spider.spider import Spider
 from bald_spider.utils.spider import transform
-from bald_spider.execptions import OutputError
+from bald_spider.exceptions import OutputError
 from bald_spider.http.request import Request
 from bald_spider.task_manager import TaskManager
 from bald_spider.core.processor import Processor

@@ -8,22 +8,26 @@ class TestMiddleware(BaseMiddleware):
 
     async def process_request(self, request, spider):
         print("BaseMiddleware process_request", request, spider)
-        # 请求的预处理
-        # pass
+        # return None
 
-    def process_response(self):
+    async def process_response(self, request, response, spider):
         # 响应的预处理
-        pass
+        print(request, response)
+        return response
 
-    def process_execption(self):
+    async def process_exception(self, request, exc, spider):
         # 异常处理
-        pass
+        print("process_exception", request, exc, spider)
+        # return None
+
 
 class TestMiddleware1(BaseMiddleware):
-    def process_response(self, request, spider):
+    async def process_response(self, request, response, spider):
         # 响应的预处理
-        pass
+        print(request, response)
+        return response
 
-    def process_execption(self):
+    async def process_exception(self, request, exc, spider):
         # 异常处理
-        pass
+        print("process_exception", request, exc, spider)
+        # return None

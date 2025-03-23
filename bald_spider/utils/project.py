@@ -1,6 +1,8 @@
 import os
 import sys
 from importlib import import_module
+from inspect import iscoroutinefunction
+from typing import Callable
 
 from bald_spider.settings.settings_manager import SettingsManager
 
@@ -35,7 +37,7 @@ def load_class(_path):
     """
     根据配置文件的路径动态的加载下载类
     """
-    if not isinstance(_path,str):
+    if not isinstance(_path, str):
         if callable(_path):
             return _path
         else:
@@ -47,3 +49,10 @@ def load_class(_path):
     except Exception:
         raise NameError(f"Module {module!r} does not define any object named {name!r}")
     return cls
+
+
+async def common_call(func: Callable, *args, **kwargs):
+    if iscoroutinefunction(func):
+        return await func(*args, **kwargs)
+    else:
+        return func(*args, **kwargs)

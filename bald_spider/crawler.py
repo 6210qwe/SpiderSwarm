@@ -2,7 +2,7 @@ import asyncio
 from typing import Type,Final,Set,Optional
 from bald_spider.spider import Spider
 from bald_spider.settings.settings_manager import SettingsManager
-from bald_spider.execptions import SpiderTypeError
+from bald_spider.exceptions import SpiderTypeError
 from bald_spider.core.engine import Engine
 from bald_spider.utils.project import merge_settings
 import signal

@@ -9,11 +9,11 @@ class BaseMiddleware:
         # 请求的预处理
         pass
 
-    def process_response(self):
+    def process_response(self, request, response, spider) -> Union[Request, Response]:
         # 响应的预处理
         pass
 
-    def process_execption(self):
+    def process_exception(self, request, exc, spider) -> Union[None, Request, Response]:
         # 异常处理
         pass
 
