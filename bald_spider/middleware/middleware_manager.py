@@ -72,6 +72,9 @@ class MiddlewareManager:
         except Exception as exc:
             self._stats.inc_value(f"download_error/{exc.__class__.__name__}")
             response = await self._process_exception(request, exc)
+        else:
+            # 临时性代码
+            self.crawler.stats.inc_value("response_received_count")
         if isinstance(response, Response):
             response = await self._process_response(request, response)
         if isinstance(response, Request):
