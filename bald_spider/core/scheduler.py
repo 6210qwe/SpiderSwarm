@@ -19,7 +19,13 @@ class Scheduler:
 
     @classmethod
     def create_instance(cls, crawler):
-        filter_cls = load_class(crawler.settings.get("FILTER_CLS"))
+        filter_cls_path = crawler.settings.get("FILTER_CLS")
+        if filter_cls_path:
+            filter_cls = load_class(filter_cls_path)
+        else:
+            from bald_spider.duplicate_filter.no_filter import NoFilter
+            filter_cls = NoFilter
+            
         o = cls(
             crawler=crawler,
             dupe_filter=filter_cls.create_instance(crawler),

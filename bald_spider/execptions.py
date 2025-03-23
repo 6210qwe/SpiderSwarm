@@ -21,5 +21,8 @@ class DecodeError(Exception):
 class MiddlewareInitError(Exception):
     pass
 
+class InvalidOutput(Exception):
+    pass
+
 class PipelineInitError(Exception):
     pass

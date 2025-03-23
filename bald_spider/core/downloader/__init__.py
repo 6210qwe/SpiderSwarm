@@ -63,7 +63,8 @@ class DownloaderBase(metaclass=DownloaderMeta):
         async with self._active(request):
             # 可以在下载前，在这里对请求预处理
             # self.process_request(request)
-            response = await self.download(request)
+            # response = await self.download(request)
+            response = await self.middleware.download(request)
             # 在下载后，在这里处理响应的预处理
             # self.process_response(response)
             return response

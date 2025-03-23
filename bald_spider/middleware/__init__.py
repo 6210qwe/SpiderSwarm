@@ -1,6 +1,11 @@
+from typing import Union
+
+from bald_spider import Request, Response
+
 
 class BaseMiddleware:
-    def process_request(self):
+    # def process_request(self, request, spider) -> None | Request | Response:
+    def process_request(self, request, spider) -> Union[None, Request, Response]:
         # 请求的预处理
         pass
 
