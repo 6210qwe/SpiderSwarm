@@ -14,6 +14,10 @@ DOWNLOADER = "bald_spider.core.downloader.aiohttp_downloader.AioDownloader"
 INTERVAL = 5
 STATS_DUMP = True
 
+# retry
+RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408, 429]
+IGNORE_HTTP_CODES = [403]
+MAX_RETRY_TIMES = 3
 
 MIDDLEWARES = [
     "bald_spider.middleware.request_ignore.RequestIgnore",
