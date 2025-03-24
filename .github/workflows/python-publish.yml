@@ -64,7 +64,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://pypi.org/p/YOURPROJECT  # 替换为您的项目URL
+      url: https://pypi.org/p/SpiderSwarm  # 替换为您的项目URL
 
     steps:
       # 1. 下载构建产物
