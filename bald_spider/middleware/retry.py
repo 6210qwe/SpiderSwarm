@@ -13,7 +13,7 @@ from httpcore import ReadError
 _retry_exceptions = [
     ClientConnectionError,
     ClientTimeout,
-    ClientConnectorSSLError,
+    # ClientConnectorSSLError,
     ClientResponseError,
     RemoteProtocolError,
     ReadError,
