@@ -10,12 +10,12 @@ class NationSpider(Spider):
 
     custom_settings = {"CONCURRENCY": 20}
 
-    @classmethod
-    def create_instance(cls, crawler):
-        o = cls()
-        o.crawler = crawler
-        crawler.subscriber.subscribe(o.spider_error, event=spider_error)
-        return o
+    # @classmethod
+    # def create_instance(cls, crawler):
+    #     o = cls()
+    #     o.crawler = crawler
+    #     crawler.subscriber.subscribe(o.spider_error, event=spider_error)
+    #     return o
 
     def parse(self, response):
         """
@@ -29,27 +29,27 @@ class NationSpider(Spider):
             yield request
 
     def parse_page(self, response):
-        # print("parse_page",response)
-        for i in range(10):
-            url = "http://www.baidu.com"
-            meta = {"test": "waws"}
-            request = Request(url=url, callback=self.parse_detail, meta=meta)
-            yield request
-
-    def parse_detail(self, response):
-        # print("parse_detail",response)
-        # print(response.text)
-        item = BaiduItem()
-        item["url"] = response.url
-        item["title"] = response.xpath("//title/text()").get()
-        # item.title = "111"
-        yield item
-
-    async def spider_error(self, exc, spider):
-        print(f"爬虫出错了{exc}, 请紧急处理一下.")
-
-    async def spider_opened(self):
-        print("我想在脚本开启的时候做一些事情，这就是我想做的事情")
-
-    async def spider_closed(self):
-        print("我想在脚本关闭的时候做一些事情，这就是我想做的事情")
+        print("parse_page",response)
+    #     for i in range(10):
+    #         url = "http://www.baidu.com"
+    #         meta = {"test": "waws"}
+    #         request = Request(url=url, callback=self.parse_detail, meta=meta)
+    #         yield request
+    #
+    # def parse_detail(self, response):
+    #     # print("parse_detail",response)
+    #     # print(response.text)
+    #     item = BaiduItem()
+    #     item["url"] = response.url
+    #     item["title"] = response.xpath("//title/text()").get()
+    #     # item.title = "111"
+    #     yield item
+    #
+    # async def spider_error(self, exc, spider):
+    #     print(f"爬虫出错了{exc}, 请紧急处理一下.")
+    #
+    # async def spider_opened(self):
+    #     print("我想在脚本开启的时候做一些事情，这就是我想做的事情")
+    #
+    # async def spider_closed(self):
+    #     print("我想在脚本关闭的时候做一些事情，这就是我想做的事情")

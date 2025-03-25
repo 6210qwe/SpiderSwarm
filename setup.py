@@ -4,22 +4,28 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="spiderswarm",
-    version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
+    name="bald-spider",
+    version="0.1.1",
+    author="MindLullaby",
+    author_email="3203939025@qq.com",
     description="A distributed spider framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/SpiderSwarm",
-    packages=find_packages(),
+    url="https://github.com/6210qwe/SpiderSwarm",
+    packages=find_packages(include=['bald_spider', 'bald_spider.*']),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.10",
     install_requires=[
-        # 在这里列出你的项目依赖
+        "requests",
+        "lxml",
+        "loguru",
+        "urllib3",
+        "curl_cffi",
+        "aiomysql",
+        "aiohttp"
     ],
 ) 
