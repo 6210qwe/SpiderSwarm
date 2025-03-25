@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="bald-spider",
-    version="0.1.1",
+    version="0.1.2",
     author="MindLullaby",
     author_email="3203939025@qq.com",
     description="A distributed spider framework",
