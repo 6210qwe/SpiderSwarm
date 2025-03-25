@@ -3,7 +3,6 @@ from bald_spider import Request
 from items import BaiduItem  # type:ignore
 from bald_spider.event import spider_error
 
-
 class BaiduSpider(Spider):
     # start_url ="https://www.baidu.com"
     start_urls = ["http://www.baidu.com", "http://www.baidu.com"]
@@ -11,11 +10,12 @@ class BaiduSpider(Spider):
     custom_settings = {"CONCURRENCY": 20}
 
     @classmethod
-    def create_instance(cls, crawler):
+    def create_instance(cls,crawler):
         o = cls()
         o.crawler = crawler
         crawler.subscriber.subscribe(o.spider_error, event=spider_error)
         return o
+
 
     def parse(self, response):
         """
