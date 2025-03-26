@@ -1,8 +1,5 @@
 # 这个地方的导包的方式学习一下
 from bald_spider import Request
-from .medical import Medical
-
-__all__ = ['Medical']
 
 class Spider:
     def __init__(self):

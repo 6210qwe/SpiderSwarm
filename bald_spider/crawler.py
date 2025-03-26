@@ -12,7 +12,7 @@ from bald_spider.utils.date import now
 from bald_spider.subscriber import Subscriber
 from bald_spider.event import spider_opened
 from bald_spider.event import spider_closed
-
+# from bald_spider.extension import ExtensionManager
 logger = get_logger(__name__)
 
 
@@ -24,15 +24,21 @@ class Crawler:
         self.stats: Optional[StatsCollector] = None
         self.settings: SettingsManager = settings.copy()
         self.subscriber: Optional[Subscriber] = None
+        self.extension: Optional[ExtensionManager] = None
 
     async def crawl(self):
         self.subscriber = self._create_subscriber()
         self.spider = self._create_spider()
         self.engine = self._create_engine()
         self.stats = self._create_stats()
+        # self.extension = self._create_extension()
         await self.engine.start_spider(self.spider)
 
-    def _create_subscriber(self):
+    # def _create_extension(self):
+    #     extension = ExtensionManager.create_instance(self)
+    #     return extension
+    @staticmethod
+    def _create_subscriber():
         subscriber = Subscriber()
         return subscriber
 
