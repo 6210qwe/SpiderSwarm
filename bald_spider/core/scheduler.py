@@ -62,8 +62,8 @@ class Scheduler:
             return False
         await self.request_queue.put(request)
         asyncio.create_task(self.crawler.subscriber.notify(request_scheduled, request, self.crawler.spider))
-        # 将请求的数量 +1
-        self.crawler.stats.inc_value("request_Scheduled_count")
+        # # 将请求的数量 +1
+        # self.crawler.stats.inc_value("request_Scheduled_count")
         return True
 
     def idle(self):
