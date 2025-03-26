@@ -1,6 +1,6 @@
 import asyncio
 from bald_spider.utils.log import get_logger
-from bald_spider.event import spider_opened
+from bald_spider.event import spider_opened, spider_closed
 
 
 class LogInterval:
@@ -31,7 +31,7 @@ class LogInterval:
         if self.task:
             self.task.cancel()
 
-    async def interval_log(self, interval):
+    async def interval_log(self):
         while True:
             # 最核心在于统计收集器和日志系统，只要可以获取配置就可以实现
             last_item_count = self.stats.get_value("item_successful_count", default=0)
@@ -42,7 +42,7 @@ class LogInterval:
             self.response_count = last_response_count
             self.logger.info(f"Crawler {last_response_count} pages (at {response_rate} pages / {self.interval}{self.unit})"
                              f"Got {last_item_count} items (at {item_rate} items / {self.interval}{self.unit})")
-            await asyncio.sleep(interval)
+            await asyncio.sleep(self.seconds)
 
 
 

@@ -1,6 +1,7 @@
 """
 default config
 """
+VERSION = 1.0
 CONCURRENCY = 8
 ABC = "wwww"
 
@@ -47,7 +48,7 @@ SAVE_FP = True
 REQUEST_DIR = '.'
 # 先状态码收集，然后重试，然后过滤掉
 MIDDLEWARES = [
-    "bald_spider.middleware.log_interval.LogInterval",
+
     "bald_spider.middleware.download_delay.DownloadDelay",
     "bald_spider.middleware.default_header.DefaultHeader",
     "bald_spider.middleware.response_filter.ResponseFilter",
@@ -58,6 +59,9 @@ MIDDLEWARES = [
     # "test.baidu_spider.middleware.TestMiddleware1",
 ]
 
+EXTENSIONS = [
+    "bald_spider.extension.log_interval.LogInterval",
+]
 PIPELINES = [
     "test.baidu_spider.pipeline.TestPipeline",
 ]
