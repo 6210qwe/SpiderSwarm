@@ -50,6 +50,11 @@ class Engine:
                             f"does not fully implemented required interface")
         return downloader_cls
 
+    def engine_start(self):
+        self.running = True
+        self.logger.info(f"bald_spider(version:{self.settings.get('VERSION')}) started"
+                         f"bald_spider started.(project name:{self.settings.get('PROJECT_NAME')})")
+
     async def start_spider(self, spider):
         # 打开开关
         self.running = True
@@ -80,7 +85,7 @@ class Engine:
         asyncio.create_task(self.crawler.subscriber.notify(spider_opened))
         crawling = asyncio.create_task(self.crawl())
         # 这个地方可以做其他事情
-        asyncio.create_task(self.scheduler.interval_log(self.settings.getint("INTERVAL")))
+        # asyncio.create_task(self.scheduler.interval_log(self.settings.getint("INTERVAL")))
         await crawling
 
     async def crawl(self):

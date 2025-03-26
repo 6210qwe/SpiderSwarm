@@ -12,6 +12,6 @@ ignore_request = "ignore_request"
 # request_scheduled arguments: request spider
 request_scheduled = "request_scheduled"
 # response_received arguments: response spider
-request_received = "request_received"
+response_received = "response_received"
 # item_successful arguments: item spider
 item_successful = "item_successful"

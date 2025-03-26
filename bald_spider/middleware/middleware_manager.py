@@ -22,8 +22,8 @@ class MiddlewareManager:
         self.middlewares: List = []
         self.methods: Dict[str:List[MethodType]] = defaultdict(list)
         middlewares = self.crawler.settings.getlist("MIDDLEWARES")
-        self._add_middleware(middlewares)
-        self._add_method()
+        self._add_middleware(middlewares)  # 用来实例化中间件
+        self._add_method()  # 把实例化好的中间件方法加进来，排好队，挨个调用
         self.download_method: Callable = crawler.engine.downloader.download
         self._stats = crawler.stats
 

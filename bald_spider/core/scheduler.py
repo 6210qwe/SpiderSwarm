@@ -62,8 +62,8 @@ class Scheduler:
             return False
         await self.request_queue.put(request)
         asyncio.create_task(self.crawler.subscriber.notify(request_scheduled, request, self.crawler.spider))
-        # 将请求的数量 +1
-        self.crawler.stats.inc_value("request_Scheduled_count")
+        # # 将请求的数量 +1
+        # self.crawler.stats.inc_value("request_Scheduled_count")
         return True
 
     def idle(self):
@@ -76,17 +76,18 @@ class Scheduler:
         return self.request_queue.qsize()
 
     # 其实这个日志并不属于调度器，只是临时写在这个地方
-    async def interval_log(self, interval):
-        while True:
-            last_item_count = self.crawler.stats.get_value("item_successful_count", default=0)
-            last_response_count = self.crawler.stats.get_value("response_received_count", default=0)
-            item_rate = last_item_count - self.item_count
-            response_rate = last_response_count - self.response_count
-            self.item_count = last_item_count
-            self.response_count = last_response_count
-            self.logger.info(f"Crawler {last_response_count} pages (at {response_rate} pages / {interval}s)"
-                             f"Got {last_item_count} items (at {item_rate} items / {interval}s)")
-            await asyncio.sleep(interval)
+    # async def interval_log(self, interval):
+    #     while True:
+    #         # 最核心在于统计收集器和日志系统，只要可以获取配置就可以实现
+    #         last_item_count = self.crawler.stats.get_value("item_successful_count", default=0)
+    #         last_response_count = self.crawler.stats.get_value("response_received_count", default=0)
+    #         item_rate = last_item_count - self.item_count
+    #         response_rate = last_response_count - self.response_count
+    #         self.item_count = last_item_count
+    #         self.response_count = last_response_count
+    #         self.logger.info(f"Crawler {last_response_count} pages (at {response_rate} pages / {interval}s)"
+    #                          f"Got {last_item_count} items (at {item_rate} items / {interval}s)")
+    #         await asyncio.sleep(interval)
 
     async def close(self):
         if isinstance(closed := getattr(self.dupe_filter, "closed", None), Callable):
