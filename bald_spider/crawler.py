@@ -44,7 +44,7 @@ class Crawler:
 
     def _create_stats(self):
         stats = StatsCollector(self)
-        stats["start_time"] = now()
+        # stats["start_time"] = now()
         return stats
 
     # 在这个地方还有个好处就是 engine、spider、crawler之间互相关联，三者都互有对方
@@ -67,7 +67,7 @@ class Crawler:
         merge_settings(spider, self.settings)
 
     async def close(self, reason="finished"):
-        asyncio.create_task(self.subscriber.notify(spider_closed))
+        await asyncio.create_task(self.subscriber.notify(spider_closed))
         self.stats.close_spider(self.spider, reason)
 
 

@@ -2,7 +2,7 @@ from asyncio import create_task
 from typing import List, Dict, Callable, Optional
 from types import MethodType
 
-from scrapy.signals import response_received
+# from scrapy.signals import response_received
 
 from bald_spider import Request, Response
 from bald_spider.utils.log import get_logger
@@ -12,7 +12,7 @@ from pprint import pformat
 from collections import defaultdict
 from bald_spider.middleware import BaseMiddleware
 from bald_spider.utils.project import common_call
-from bald_spider.event import ignore_request
+from bald_spider.event import ignore_request, response_received
 
 
 class MiddlewareManager:
@@ -92,7 +92,7 @@ class MiddlewareManager:
         else:
             # 临时性代码
             create_task(self.crawler.subscriber.notify(response_received, response, self.crawler.spider))
-            self.crawler.stats.inc_value("response_received_count")
+            # self.crawler.stats.inc_value("response_received_count")
         if isinstance(response, Response):
             response = await self._process_response(request, response)
         if isinstance(response, Request):

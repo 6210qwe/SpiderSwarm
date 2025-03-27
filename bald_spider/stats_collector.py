@@ -32,9 +32,9 @@ class StatsCollector:
         self._stats.clear()
 
     def close_spider(self,spider,reason):
-        self._stats["end_time"] = now()
+        # self._stats["end_time"] = now()
         self._stats["reason"] = reason
-        self._stats["cost_time(s)"] = date_delta(self._stats["start_time"],self._stats["end_time"])
+        # self._stats["cost_time(s)"] = date_delta(self._stats["start_time"],self._stats["end_time"])
         if self._dump:
             self.logger.info(f"{spider} stats:\n" + pformat(self._stats))
 

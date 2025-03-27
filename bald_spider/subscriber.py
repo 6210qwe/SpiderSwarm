@@ -2,6 +2,7 @@ from collections import defaultdict
 from typing import Dict, Set, Callable, Coroutine, Any
 import asyncio
 
+
 class Subscriber:
     def __init__(self):
         self._subscriber: Dict[str, Set[Callable[..., Coroutine[Any, Any, None]]]] = defaultdict(set)
@@ -16,18 +17,3 @@ class Subscriber:
         for receiver in self._subscriber[event]:
             # asyncio.create_task(receiver(*args, **kwargs)) # 不需要await 因为是支线任务，没必要等它
             asyncio.create_task(receiver(*args, **kwargs))  # type: ignore
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

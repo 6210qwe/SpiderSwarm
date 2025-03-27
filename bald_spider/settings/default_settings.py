@@ -61,6 +61,7 @@ MIDDLEWARES = [
 
 EXTENSIONS = [
     "bald_spider.extension.log_interval.LogInterval",
+    "bald_spider.extension.log_stats.LogStats",
 ]
 PIPELINES = [
     "test.baidu_spider.pipeline.TestPipeline",
