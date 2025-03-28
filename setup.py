@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="bald-spider",
-    version="0.1.1",
+    name="bald_spider",
+    version="0.1.2",
     author="MindLullaby",
     author_email="3203939025@qq.com",
     description="A distributed spider framework",
@@ -26,6 +26,12 @@ setup(
         "urllib3",
         "curl_cffi",
         "aiomysql",
-        "aiohttp"
+        "aiohttp",
+        "click"
     ],
+    entry_points={
+        'console_scripts': [
+            'bald_spider=bald_spider.cmdline:execute',
+        ],
+    },
 ) 
