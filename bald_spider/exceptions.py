@@ -38,3 +38,6 @@ class NotConfigured(Exception):
 
 class ExtensionInitError(Exception):
     pass
+
+class ReceiverTypeError(Exception):
+    pass

@@ -52,7 +52,7 @@ class Engine:
 
     def engine_start(self):
         self.running = True
-        self.logger.info(f"bald_spider(version:{self.settings.get('VERSION')}) started"
+        self.logger.info(f"bald_spider(version:{self.settings.get('VERSION')}) started. "
                          f"bald_spider started.(project name:{self.settings.get('PROJECT_NAME')})")
 
     async def start_spider(self, spider):

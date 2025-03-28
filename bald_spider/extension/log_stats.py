@@ -15,11 +15,12 @@ class LogStats:
         crawler.subscriber.subscribe(o.request_scheduled, event=event.request_scheduled)
         return o
 
-    async def request_scheduled(self, _request, _spider):
+    async def request_scheduled(self, request, spider):
         # 将请求的数量 +1
         self.stats.inc_value("request_Scheduled_count")
 
-    async def response_received(self, _response, _spider):
+    async def response_received(self, response, spider):
+        # 只要是和订阅者相关的函数一定要写成协程
         # 将响应的数量 +1
         self.stats.inc_value("response_received_count")
 

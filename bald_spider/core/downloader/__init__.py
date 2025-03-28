@@ -69,7 +69,8 @@ class DownloaderBase(metaclass=DownloaderMeta):
             # self.process_response(response)
             # 触发响应接收事件
             if response:
-                await self.crawler.subscriber.notify("response_received", response)
+                # await self.crawler.subscriber.notify("response_received", response)
+                self.crawler.subscriber.notify("response_received", response)
             return response
 
     @abstractmethod

@@ -2,7 +2,7 @@
 default config
 """
 VERSION = 1.0
-CONCURRENCY = 8
+CONCURRENCY = 20
 ABC = "wwww"
 
 LOG_LEVEL = "INFO"
@@ -12,7 +12,8 @@ USE_SESSION = True
 DOWNLOADER = "bald_spider.core.downloader.aiohttp_downloader.AioDownloader"
 # DOWNLOADER = "bald_spider.core.downloader.httpx_downloader.HttpxDownloader"
 
-INTERVAL = 5
+
+INTERVAL = 0
 STATS_DUMP = True
 
 # retry
@@ -29,10 +30,12 @@ MAX_RETRY_TIMES = 3
 #     # "bald_spider.middleware.request_random_cookie.RequestRandomCookie",
 # ]
 
-
+# 下载延迟
 DOWNLOAD_DELAY = 0
-RANDOMNESS = True
-RANDOM_RANGE = (0.75, 1.25)
+#
+# RANDOMNESS = True
+RANDOMNESS = False
+# RANDOM_RANGE = (0.75, 1.25)
 
 FILTER_DEBUG = True
 # FILTER_CLS = "bald_spider.duplicate_filter.memory_filter.MemoryFilter"
@@ -48,20 +51,19 @@ SAVE_FP = True
 REQUEST_DIR = '.'
 # 先状态码收集，然后重试，然后过滤掉
 MIDDLEWARES = [
-
-    "bald_spider.middleware.download_delay.DownloadDelay",
-    "bald_spider.middleware.default_header.DefaultHeader",
-    "bald_spider.middleware.response_filter.ResponseFilter",
-    "bald_spider.middleware.retry.Retry",
-    "bald_spider.middleware.response_code.ResponseCodeStats",
-    "bald_spider.middleware.request_ignore.RequestIgnore",
+    # "bald_spider.middleware.download_delay.DownloadDelay",
+    # "bald_spider.middleware.default_header.DefaultHeader",
+    # "bald_spider.middleware.response_filter.ResponseFilter",
+    # "bald_spider.middleware.retry.Retry",
+    # "bald_spider.middleware.response_code.ResponseCodeStats",
+    # "bald_spider.middleware.request_ignore.RequestIgnore",
     # "test.baidu_spider.middleware.TestMiddleware",
     # "test.baidu_spider.middleware.TestMiddleware1",
 ]
 
 EXTENSIONS = [
-    "bald_spider.extension.log_interval.LogInterval",
-    "bald_spider.extension.log_stats.LogStats",
+    # "bald_spider.extension.log_interval.LogInterval",
+    # "bald_spider.extension.log_stats.LogStats",
 ]
 PIPELINES = [
     "test.baidu_spider.pipeline.TestPipeline",
@@ -71,4 +73,4 @@ DEFAULT_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
 }
-ALLOWED_CODES = [404]
+ALLOWED_CODES = []

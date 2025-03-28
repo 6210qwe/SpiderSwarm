@@ -1,9 +1,10 @@
-from asyncio import PriorityQueue,TimeoutError
+from asyncio import PriorityQueue, TimeoutError
 import asyncio
+
 
 class SpiderPriorityQueue(PriorityQueue):
     def __init__(self, maxsize=0):
-        super(SpiderPriorityQueue,self).__init__(maxsize=maxsize)
+        super(SpiderPriorityQueue, self).__init__(maxsize=maxsize)
 
     async def get(self):
         # 在get的方法中Remove and return an item from the queue.If queue is empty, wait until an item is available.
