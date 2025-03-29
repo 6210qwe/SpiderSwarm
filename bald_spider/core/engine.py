@@ -2,6 +2,9 @@ import asyncio
 from inspect import iscoroutine
 
 from typing import Optional, Generator, Callable, Final, Set
+
+from loguru import logger
+
 from bald_spider.core.scheduler import Scheduler
 from bald_spider.spider import Spider
 from bald_spider.utils.spider import transform
@@ -36,7 +39,7 @@ class Engine:
         # 控制爬虫进行的开关
         self.running = False
         # 初始化task管理器
-        print("当前的并发数是：", self.settings.getint("CONCURRENCY"))
+        logger.info(f'当前的并发数是：{self.settings.getint("CONCURRENCY")}')
         self.task_manager: TaskManager = TaskManager(self.settings.getint("CONCURRENCY"))
         # 程序是不是正常的
         self.normal = True
@@ -52,13 +55,13 @@ class Engine:
 
     def engine_start(self):
         self.running = True
-        self.logger.info(f"bald_spider(version:{self.settings.get('VERSION')}) started. "
-                         f"bald_spider started.(project name:{self.settings.get('PROJECT_NAME')})")
+        self.logger.debug(f"bald_spider(version:{self.settings.get('VERSION')}) started. "
+                          f"bald_spider started.(project name:{self.settings.get('PROJECT_NAME')})")
 
     async def start_spider(self, spider):
         # 打开开关
         self.running = True
-        self.logger.info(f"bald_spider started.(project name:{self.settings.get('PROJECT_NAME')})")
+        self.logger.debug(f"bald_spider started.(project name:{self.settings.get('PROJECT_NAME')})")
 
         # 得到spider
         self.spider = spider
@@ -172,7 +175,7 @@ class Engine:
             elif isinstance(spider_output, Exception):
                 # 在这里调用处理函数是没问题的，但是如果说开发者没有写spider_error
                 # 因为没有抛出异常，在内部把异常消化掉了
-                asyncio.create_task(self.crawler.subscriber.notify(spider_error,spider_output, self.spider))
+                asyncio.create_task(self.crawler.subscriber.notify(spider_error, spider_output, self.spider))
                 raise spider_output
             else:
                 raise OutputError(f"{type(self.spider)} must return Request or Item")

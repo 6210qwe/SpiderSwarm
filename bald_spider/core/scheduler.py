@@ -43,7 +43,7 @@ class Scheduler:
     def open(self):
         self.request_queue = SpiderPriorityQueue()
         # 输出当前使用的过滤器
-        self.logger.info(f"request filter: {self.dupe_filter}")
+        self.logger.debug(f"request filter: {self.dupe_filter}")
 
     async def next_request(self) -> Optional[Request]:
         request = await self.request_queue.get()

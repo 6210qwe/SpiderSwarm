@@ -31,6 +31,9 @@ class LogStats:
         self.stats["end_time"] = now()
         self.stats["cost_time(s)"] = date_delta(self.stats["start_time"],self.stats["end_time"])
 
+    def __str__(self):
+        return "LogStats"
+
 
 
 

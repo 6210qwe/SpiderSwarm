@@ -33,7 +33,7 @@ class PipelineManager:
 
             self.pipelines.append(pipeline_cls.create_instance(self.crawler))
         if pipelines:
-            self.logger.info(f"enabled pipelines: \n {pformat(pipelines)}")
+            self.logger.debug(f"enabled pipelines: \n {pformat(pipelines)}")
 
     def _add_methods(self):
         for pipeline in self.pipelines:

@@ -115,7 +115,7 @@ class MiddlewareManager:
     def _add_middleware(self, middlewares):
         enable_middlewares = [m for m in middlewares if self._validate_middleware(m)]
         if enable_middlewares:
-            self.logger.info(f"enable middlewares:\n {pformat(enable_middlewares)}")
+            self.logger.debug(f"enable middlewares:\n {pformat(enable_middlewares)}")
 
     def _validate_middleware(self, middleware):
         middleware_cls = load_class(middleware)

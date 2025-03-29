@@ -137,7 +137,7 @@ class DistributedSpider:
                     logging.info(f"成功处理URL: {request_info['url']}")
                     
                 # 随机延时
-                time.sleep(random.uniform(1, 3))
+                # time.sleep(random.uniform(1, 3))
                 
             except KeyboardInterrupt:
                 logging.info("爬虫被手动中断")

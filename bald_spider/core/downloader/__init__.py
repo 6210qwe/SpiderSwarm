@@ -54,7 +54,7 @@ class DownloaderBase(metaclass=DownloaderMeta):
         return cls(*args,**kwargs)
 
     def open(self) -> None:
-        self.logger.info(f"{self.crawler.spider} <downloader class:{type(self).__name__}>"
+        self.logger.debug(f"{self.crawler.spider} <downloader class:{type(self).__name__}>"
                          f"<concurrency:{self.crawler.settings.getint('CONCURRENCY')}>")
         self.middleware = MiddlewareManager.create_instance(self.crawler)
 
