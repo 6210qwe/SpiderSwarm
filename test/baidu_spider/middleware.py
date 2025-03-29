@@ -7,8 +7,9 @@ class TestMiddleware(BaseMiddleware):
         pass
 
     async def process_request(self, request, spider):
-        print("BaseMiddleware process_request", request, spider)
+        # print("BaseMiddleware process_request", request, spider)
         # return None
+        return request
 
     async def process_response(self, request, response, spider):
         # 响应的预处理

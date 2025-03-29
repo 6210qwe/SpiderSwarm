@@ -30,7 +30,7 @@ class Scheduler:
         else:
             from bald_spider.duplicate_filter.no_filter import NoFilter
             filter_cls = NoFilter
-            
+
         o = cls(
             crawler=crawler,
             dupe_filter=filter_cls.create_instance(crawler),
@@ -47,9 +47,9 @@ class Scheduler:
 
     async def next_request(self) -> Optional[Request]:
         request = await self.request_queue.get()
-        if request is not None:
+        # if request is not None:
             # print(request.priority, request.callback.__name__)
-            print(request.priority, request.callback)
+            # print(request.priority, request.callback)
         return request
 
     # async def enqueue_request(self, request):
