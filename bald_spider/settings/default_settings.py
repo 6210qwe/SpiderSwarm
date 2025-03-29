@@ -63,7 +63,7 @@ MIDDLEWARES = [
 
 EXTENSIONS = [
     # "bald_spider.extension.log_interval.LogInterval",
-    # "bald_spider.extension.log_stats.LogStats",
+    "bald_spider.extension.log_stats.LogStats",
 ]
 PIPELINES = [
     "test.baidu_spider.pipeline.TestPipeline",
@@ -74,3 +74,7 @@ DEFAULT_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
 }
 ALLOWED_CODES = []
+
+# 优先级队列设置
+RETRY_PRIORITY = 0
+DEPTH_PRIORITY = 1  # 只要设置为1就可以优先请求详情页

@@ -5,6 +5,7 @@ from w3lib.url import canonicalize_url
 from bald_spider import Request
 from typing import Optional, Iterator, Union, Iterable, Tuple
 
+
 # 指纹生成器
 
 def to_bytes(text, encoding="utf-8"):
@@ -14,6 +15,7 @@ def to_bytes(text, encoding="utf-8"):
         return text.encode(encoding)
     if isinstance(text, dict):
         return json.dumps(text, sort_keys=True).encode(encoding)
+    raise TypeError("Expected bytes or str, got %s" % type(text))
 
 
 def request_fingerprint(request: Request,
@@ -35,18 +37,7 @@ def request_fingerprint(request: Request,
     return fingerprint
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def set_request(request: Request, priority: int = 0):
+    request.meta['depth'] = request.meta.setdefault('depth', 0) + 1
+    if priority:
+        request.priority += request.meta['depth'] * priority

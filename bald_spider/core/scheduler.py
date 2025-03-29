@@ -2,14 +2,16 @@ import asyncio
 from asyncio import PriorityQueue
 from typing import Optional, Callable
 
+from bald_spider import Request
 from bald_spider.event import request_scheduled
 from bald_spider.utils.pqueue import SpiderPriorityQueue
 from bald_spider.utils.log import get_logger
 from bald_spider.utils.project import load_class
+from bald_spider.utils.request import set_request
 
 
 class Scheduler:
-    def __init__(self, crawler, dupe_filter, stats, log_level):
+    def __init__(self, crawler, dupe_filter, stats, log_level, priority):
         self.crawler = crawler
         # 使用优先级队列，不同的请求的优先级不同
         self.request_queue: Optional[PriorityQueue] = None
@@ -18,6 +20,7 @@ class Scheduler:
         self.logger = get_logger(self.__class__.__name__, log_level=log_level)
         self._stats = stats
         self.dupe_filter = dupe_filter
+        self.priority = priority
 
     @classmethod
     def create_instance(cls, crawler):
@@ -32,7 +35,8 @@ class Scheduler:
             crawler=crawler,
             dupe_filter=filter_cls.create_instance(crawler),
             stats=crawler.stats,
-            log_level=crawler.settings.get("LOG_LEVEL")
+            log_level=crawler.settings.get("LOG_LEVEL"),
+            priority=crawler.settings.getint("DEPTH_PRIORITY"),
         )
         return o
 
@@ -41,8 +45,11 @@ class Scheduler:
         # 输出当前使用的过滤器
         self.logger.info(f"request filter: {self.dupe_filter}")
 
-    async def next_request(self):
+    async def next_request(self) -> Optional[Request]:
         request = await self.request_queue.get()
+        if request is not None:
+            # print(request.priority, request.callback.__name__)
+            print(request.priority, request.callback)
         return request
 
     # async def enqueue_request(self, request):
@@ -60,6 +67,7 @@ class Scheduler:
         ):
             self.dupe_filter.log_stats(request)
             return False
+        set_request(request, self.priority)
         await self.request_queue.put(request)
         asyncio.create_task(self.crawler.subscriber.notify(request_scheduled, request, self.crawler.spider))
         # # 将请求的数量 +1

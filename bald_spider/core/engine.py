@@ -152,7 +152,7 @@ class Engine:
                     await _outputs
                 else:
                     # 是生成器类型，就都转化成异步生成器
-                    return transform(_outputs)
+                    return transform(_outputs, _response)
 
         _response = await self.downloader.fetch(request)
         if _response is None:

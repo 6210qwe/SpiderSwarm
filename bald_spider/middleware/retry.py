@@ -35,6 +35,7 @@ class Retry:
                  max_retry_times: int,
                  retry_exceptions: List,
                  stats: StatsCollector,
+                 retry_priority: int
                  ):
         self.retry_http_codes = retry_http_codes
         self.ignore_http_codes = ignore_http_codes
@@ -42,6 +43,7 @@ class Retry:
         # self.retry_exceptions = retry_exceptions
         self.retry_exceptions = tuple(retry_exceptions + _retry_exceptions)
         self.stats = stats
+        self.retry_priority = retry_priority
         self.logger = get_logger(self.__class__.__name__, "INFO")
 
     @classmethod
@@ -52,6 +54,7 @@ class Retry:
             max_retry_times=crawler.settings.getint("RETRY_TIMES"),
             retry_exceptions=crawler.settings.getlist("RETRY_EXCEPTIONS"),
             stats=crawler.stats,
+            retry_priority=crawler.settings.getint("RETRY_PRIORITY")
         )
         return o
 
@@ -85,12 +88,14 @@ class Retry:
         retry_times = request.meta.get("retry_times", 0)  #因为第一次进来获取不到，给默认值0
         if retry_times < self.max_retry_times:
             retry_times += 1
-            self.logger.info(f" {request} {reason} retrying {retry_times}...")
+            self.logger.info(f"{spider} {request} {reason} retrying {retry_times} times...")
             request.meta["retry_times"] = retry_times
+            request.dont_filter = True
+            request.priority = request.priority + self.retry_priority
             self.stats.inc_value("retry/count")
             return request
         else:
-            self.logger.info(f" {request} {reason} retrying max {self.max_retry_times} times, give up")
+            self.logger.warning(f"{spider} {request} {reason} retrying max {self.max_retry_times} times, give up")
             return None
 
 

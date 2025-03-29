@@ -19,7 +19,7 @@ class Request:
         self.url = url
         self.headers = headers if headers else {}
         self.callback = callback
-        self.priority = priority
+        self.priority = -priority  #设置优先级队列，实现越大越优先
         self.method = method
         self.cookies = cookies
         self.proxy = proxy
