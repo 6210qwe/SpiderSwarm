@@ -1,0 +1,114 @@
+[32m2025-03-29 23:31:26.977[0m | [1mINFO    [0m | [36mEngine[0m: [1mbald_spider(version:1.0) started. bald_spider started.(project name:baidu_spider)[0m
+[32m2025-03-29 23:31:26.983[0m | [1mINFO    [0m | [36mExtensionManager[0m: [1mLoaded extensions:
+[<bald_spider.extension.log_stats.LogStats object at 0x000001AABF291490>][0m
+[32m2025-03-29 23:31:26.983[0m | [1mINFO    [0m | [36mEngine[0m: [1mbald_spider started.(project name:baidu_spider)[0m
+[32m2025-03-29 23:31:26.986[0m | [1mINFO    [0m | [36mScheduler[0m: [1mrequest filter: NoFilter[0m
+[32m2025-03-29 23:31:27.111[0m | [1mINFO    [0m | [36mAioDownloader[0m: [1mBaiduSpider <downloader class:AioDownloader><concurrency:20>[0m
+[32m2025-03-29 23:31:27.488[0m | [1mINFO    [0m | [36mMiddlewareManager[0m: [1menable middlewares:
+ ['bald_spider.middleware.default_header.DefaultHeader',
+ 'bald_spider.middleware.retry.Retry',
+ 'bald_spider.middleware.response_code.ResponseCodeStats',
+ 'bald_spider.middleware.request_ignore.RequestIgnore'][0m
+[32m2025-03-29 23:31:27.491[0m | [1mINFO    [0m | [36mPipelineManager[0m: [1menabled pipelines: 
+ ['test.baidu_spider.pipeline.TestPipeline'][0m
+[32m2025-03-29 23:31:27.598[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:27.689[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:31.364[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:31.365[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:31.366[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:32.675[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:32.676[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:32.677[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.451[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:33.452[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.453[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.453[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.454[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.455[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.455[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.456[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.456[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.457[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:33.458[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:34.014[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:35.133[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:35.232[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:35.354[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:35.354[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.356[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.356[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.356[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.357[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.357[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.358[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.358[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.359[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.359[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:35.510[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:36.394[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:36.488[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:36.718[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:37.408[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:37.604[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:37.986[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:37.991[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:38.244[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:38.320[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:38.349[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:38.350[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.351[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.351[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.351[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.352[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.352[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.352[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.353[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.353[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:38.353[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:39.282[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:39.375[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:39.438[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:39.523[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.190[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.250[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.382[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.722[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.733[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.874[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.964[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:40.965[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.965[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.966[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.966[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.967[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.967[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.968[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.969[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.970[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:40.970[0m | [34m[1mDEBUG   [0m | [36mAioDownloader[0m: [34m[1mrequest downloading:http://www.baidu.com，method:GET[0m
+[32m2025-03-29 23:31:41.956[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:42.440[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:43.057[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:43.620[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:44.074[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:45.259[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:46.451[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:46.714[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:46.973[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:47.003[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:47.185[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:47.427[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:47.779[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:48.410[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:48.905[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:49.713[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:51.370[0m | [34m[1mDEBUG   [0m | [36mResponseCodeStats[0m: [34m[1mGot Response from <200 http://www.baidu.com>[0m
+[32m2025-03-29 23:31:51.479[0m | [1mINFO    [0m | [36mStatsCollector[0m: [1mBaiduSpider stats:
+{'cost_time(s)': 24.0,
+ 'end_time': '2025-03-29 23:31:51',
+ 'item_successful_count': 40,
+ 'reason': 'finished',
+ 'request_Scheduled_count': 46,
+ 'response_received_count': 46,
+ 'start_time': '2025-03-29 23:31:27',
+ 'stats_code/count/200': 46}[0m

@@ -31,10 +31,10 @@ MAX_RETRY_TIMES = 3
 # ]
 
 # 下载延迟
-DOWNLOAD_DELAY = 0
+# DOWNLOAD_DELAY = 0
 #
 # RANDOMNESS = True
-RANDOMNESS = False
+# RANDOMNESS = False
 # RANDOM_RANGE = (0.75, 1.25)
 
 FILTER_DEBUG = True
@@ -52,7 +52,7 @@ REQUEST_DIR = '.'
 # 先状态码收集，然后重试，然后过滤掉
 MIDDLEWARES = [
     "bald_spider.middleware.download_delay.DownloadDelay",
-    "bald_spider.middleware.default_header.DefaultHeader",
+    # "bald_spider.middleware.default_header.DefaultHeader",
     "bald_spider.middleware.response_filter.ResponseFilter",
     "bald_spider.middleware.retry.Retry",
     "bald_spider.middleware.response_code.ResponseCodeStats",
@@ -62,7 +62,7 @@ MIDDLEWARES = [
 ]
 
 EXTENSIONS = [
-    # "bald_spider.extension.log_interval.LogInterval",
+    "bald_spider.extension.log_interval.LogInterval",
     "bald_spider.extension.log_stats.LogStats",
 ]
 PIPELINES = [
@@ -71,7 +71,6 @@ PIPELINES = [
 
 DEFAULT_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
 }
 ALLOWED_CODES = []
 

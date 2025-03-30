@@ -23,7 +23,7 @@ class BaiduSpider(Spider):
         若使用异步的方式，得到的其实就是异步生成器
         """
         # print("parse",response)
-        for i in range(2):
+        for i in range(200):
             url = "http://www.baidu.com"
             request = Request(url=url, callback=self.parse_page)
             yield request
@@ -37,12 +37,9 @@ class BaiduSpider(Spider):
             yield request
 
     def parse_detail(self, response):
-        # print("parse_detail",response)
-        # print(response.text)
         item = BaiduItem()
         item["url"] = response.url
         item["title"] = response.xpath("//title/text()").get()
-        # item.title = "111"
         yield item
 
     async def spider_error(self, exc, spider):

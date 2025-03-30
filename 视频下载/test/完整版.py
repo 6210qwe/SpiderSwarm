@@ -273,7 +273,7 @@ class TulingSpider:
         :param url: m3u8地址
         """
         # 获取桌面路径
-        desktop_path = Path.home() / "Desktop/安卓第一期"
+        desktop_path = Path.home() / "Desktop/安卓第二期"
 
         # 创建异步事件循环
         loop = asyncio.new_event_loop()
@@ -304,7 +304,8 @@ class TulingSpider:
 def main():
     spider = TulingSpider()
     # spider.crawl_courses('p_67a44a87e4b0694c5a8bd39b')
-    spider.crawl_courses('p_629db4b9e4b0812e17a2f4bc', 7)
+    # spider.crawl_courses('p_629db4b9e4b0812e17a2f4bc', 7)
+    spider.crawl_courses('p_6540bba5e4b064a863bf3127', 8)
 
 
 if __name__ == '__main__':

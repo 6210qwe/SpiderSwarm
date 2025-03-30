@@ -23,9 +23,11 @@ class DownloadDelay:
 
     async def process_request(self, _request, _spider):
         if self.randomness:
-            await sleep(uniform(self.delay * self.floor, self.delay * self.upper))
+            # await sleep(uniform(self.delay * self.floor, self.delay * self.upper))
+            await sleep(0.01)
         else:
-            await sleep(self.delay)
+            # await sleep(self.delay)
+            await sleep(0.01)
 
 
 
