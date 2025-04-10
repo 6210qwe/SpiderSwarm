@@ -33,12 +33,12 @@
 
 
 from loguru import logger
-from typing import Dict, Tuple, Optional
-from logging import INFO
+from typing import Dict, Tuple, Optional, Any
+
 
 
 class LogManager:
-    _loggers: Dict[Tuple[str, Optional[int]], logger] = {}
+    _loggers: Dict[Tuple[str, Optional[int]], Any] = {}
 
     @classmethod
     def get_logger(cls, name: str = "default", log_level=None, log_format=None) -> logger:
