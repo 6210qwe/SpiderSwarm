@@ -1,5 +1,5 @@
 from typing import Dict, Optional, Callable
-
+from urllib.parse import urlencode
 
 class Request:
     def __init__(
@@ -9,6 +9,7 @@ class Request:
             priority: int = 0,
             method: str = "GET",
             cookies: Optional[Dict] = None,
+            params: Optional[Dict] = None,
             proxy: Optional[Dict] = None,
             body: Optional[Dict] = None,
             encoding="utf-8",
@@ -27,6 +28,20 @@ class Request:
         self.encoding = encoding
         self._meta = meta if meta is not None else {}
         self.dont_filter = dont_filter
+        self.params = params
+        if self.params:
+            filtered_params = {k: v for k, v in self.params.items() if v is not None}
+            query_string = urlencode(filtered_params)
+            self.url = f"{self.url}?{query_string}"
+
+    @property
+    def full_url(self):
+        if self.params:
+            filtered_params = {k: v for k, v in self.params.items() if v is not None}
+            query_string = urlencode(filtered_params)
+            return f"{self.url}?{query_string}"
+        print(self.url)
+        return self.url
 
     def __lt__(self, other):
         return self.priority < other.priority
